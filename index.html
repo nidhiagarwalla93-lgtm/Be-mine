@@ -13,9 +13,8 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            overflow: hidden; /* Prevents scrollbars during the button explosion */
+            overflow: hidden; 
             font-family: 'Arial', sans-serif;
-            text-align: center;
         }
 
         .content-wrapper {
@@ -23,7 +22,7 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            z-index: 1000; /* Keeps main content on top of scattered buttons */
+            z-index: 1000;
             position: relative;
         }
 
@@ -39,7 +38,7 @@
             margin-bottom: 30px;
         }
 
-        .btn-group { display: flex; gap: 20px; justify-content: center; }
+        .btn-group { display: flex; gap: 20px; }
         
         button {
             padding: 15px 40px;
@@ -48,7 +47,6 @@
             border-radius: 50px;
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         #yesBtn { background-color: #4caf50; color: white; }
@@ -76,7 +74,7 @@
             cursor: pointer;
             opacity: 0;
             transform: scale(0);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
         }
 
         .heart {
@@ -100,6 +98,14 @@
         }
 
         .dance-gif { width: 280px; height: auto; border-radius: 10px; margin-bottom: 20px; }
+        
+        /* Matching styles for Success text */
+        .yay-text {
+            color: #d81b60;
+            font-size: 50px;
+            font-weight: 900;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -114,13 +120,13 @@
     </div>
 
     <div id="overlay">
-        <h1 style="font-size: 60px; font-weight: 900;">WRONG CHOICE.<br>NOT ALLOWED.</h1>
+        <h1 style="font-size: 60px; font-weight: 900; text-align: center;">WRONG CHOICE.<br>NOT ALLOWED.</h1>
     </div>
 
     <div id="success">
         <img id="finalGif" src="https://raw.githubusercontent.com/nidhiagarwalla93-lgtm/Be-mine/main/dududance.gif" class="dance-gif">
-        <h1 style="color: #d81b60; font-size: 50px; margin: 0;">YAY! ❤️🌹</h1>
-        <p style="font-size: 30px;">Best decision ever!</p>
+        <h1 class="yay-text">YAY! ❤️🌹</h1>
+        <h1 class="yay-text">Best decision ever!</h1>
     </div>
 
     <script>
@@ -129,17 +135,17 @@
             overlay.style.display = 'flex';
             setTimeout(() => {
                 overlay.style.display = 'none';
-                spawnScatteredChaos();
+                spawnPureChaos();
             }, 1500);
         }
 
-        function spawnScatteredChaos() {
+        function spawnPureChaos() {
             const noBtn = document.getElementById('noBtn');
             noBtn.innerText = "Yes";
             noBtn.style.backgroundColor = "#ff4081";
             noBtn.onclick = celebrate;
 
-            const totalButtons = 100;
+            const totalButtons = 150; 
             
             for (let i = 0; i < totalButtons; i++) {
                 setTimeout(() => {
@@ -148,25 +154,24 @@
                     btn.className = "spawned-yes";
                     btn.onclick = celebrate;
 
-                    // Truly random placement across the entire viewport
+                    // Fully random screen-wide placement
                     const x = Math.random() * (window.innerWidth - 100);
                     const y = Math.random() * (window.innerHeight - 50);
 
                     btn.style.left = x + 'px';
                     btn.style.top = y + 'px';
 
-                    // Random sizes: some small (0.5), some massive (2.0)
-                    const randomScale = 0.5 + Math.random() * 1.5;
+                    // Random scale between 0.4x and 2.2x
+                    const randomScale = 0.4 + Math.random() * 1.8; 
                     
                     document.body.appendChild(btn);
 
-                    // Trigger the animation
                     setTimeout(() => {
                         btn.style.opacity = "1";
                         btn.style.transform = `scale(${randomScale})`;
-                    }, 10);
+                    }, 20);
 
-                }, i * 25); // Popping in one after another every 25ms
+                }, i * 20); // Pop-pop-pop-pop!
             }
         }
 
@@ -178,7 +183,6 @@
             successDiv.style.display = 'flex';
             document.body.style.backgroundColor = "#ffc1e3";
 
-            // Floating hearts interval
             setInterval(() => {
                 const heart = document.createElement('div');
                 heart.innerHTML = '❤️';
@@ -186,7 +190,7 @@
                 heart.style.left = Math.random() * 100 + 'vw';
                 document.body.appendChild(heart);
                 setTimeout(() => heart.remove(), 4000);
-            }, 250);
+            }, 200);
         }
     </script>
 </body>
