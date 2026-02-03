@@ -13,7 +13,7 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            overflow: hidden; /* Keeps buttons inside the screen */
+            overflow: hidden;
             font-family: 'Arial', sans-serif;
             text-align: center;
         }
@@ -23,38 +23,38 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            z-index: 100; /* Keeps the main content above the scattered buttons */
+            z-index: 100;
             position: relative;
+            pointer-events: auto;
         }
 
         .teddy-img {
-            width: 320px; 
+            width: 300px; 
             height: auto;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-radius: 20px;
         }
 
         .banner {
             background: #ff4081;
             color: white;
-            padding: 20px 40px;
+            padding: 15px 30px;
             border-radius: 15px;
             box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-            font-size: 32px;
+            font-size: 28px;
             font-weight: bold;
-            margin-bottom: 40px;
-            max-width: 85%;
+            margin-bottom: 30px;
         }
 
         .btn-group {
             display: flex;
-            gap: 25px;
+            gap: 20px;
             justify-content: center;
         }
         
         button {
-            padding: 20px 60px;
-            font-size: 32px;
+            padding: 15px 40px;
+            font-size: 28px;
             font-weight: bold;
             border-radius: 50px;
             border: none;
@@ -76,24 +76,26 @@
             justify-content: center;
         }
 
-        /* Scattered Yes Button Style */
         .spawned-yes {
             position: absolute;
             background-color: #ff4081;
             color: white;
-            z-index: 10; /* Lower than main content */
-            white-space: nowrap;
+            z-index: 10;
             padding: 10px 20px;
             font-weight: bold;
             border-radius: 50px;
             border: none;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
         }
 
         .success-screen {
             display: none;
-            font-size: 50px;
-            color: #d81b60;
+            z-index: 2000;
+        }
+
+        .dance-gif {
+            width: 250px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -113,8 +115,9 @@
     </div>
 
     <div id="success" class="success-screen">
-        <h1>YAY! ❤️🌹</h1>
-        <p>Best decision ever!</p>
+        <img src="dududance.gif" alt="Dudu Dancing" class="dance-gif">
+        <h1 style="color: #d81b60; font-size: 50px;">YAY! ❤️🌹</h1>
+        <p style="font-size: 30px;">Best decision ever!</p>
     </div>
 
     <script>
@@ -133,43 +136,42 @@
             noBtn.style.backgroundColor = "#ff4081";
             noBtn.onclick = celebrate;
 
-            // Spawn 35 Yes buttons around the edges
-            for (let i = 0; i < 35; i++) {
-                let btn = document.createElement("button");
-                btn.innerHTML = "Yes";
-                btn.className = "spawned-yes";
-                btn.onclick = celebrate;
+            const rows = 10;
+            const cols = 10;
+            const cellWidth = window.innerWidth / cols;
+            const cellHeight = window.innerHeight / rows;
 
-                // Randomly set a large size for some buttons
-                const scale = Math.random() * (1.8 - 0.8) + 0.8; 
-                btn.style.transform = `scale(${scale})`;
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    // Calculate center position of each grid cell
+                    const x = c * cellWidth + (cellWidth / 2) - 40;
+                    const y = r * cellHeight + (cellHeight / 2) - 20;
 
-                // Random placement excluding the center area
-                let x, y;
-                const safeZoneWidth = 400; // Width of the area to avoid
-                const safeZoneHeight = 500; // Height of the area to avoid
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2;
+                    // Avoid the center zone where Dudu and Banner are
+                    const centerX = window.innerWidth / 2;
+                    const centerY = window.innerHeight / 2;
+                    if (Math.abs(x - centerX) < 200 && Math.abs(y - centerY) < 250) continue;
 
-                do {
-                    x = Math.random() * (window.innerWidth - 100);
-                    y = Math.random() * (window.innerHeight - 50);
-                } while (
-                    x > centerX - safeZoneWidth/2 && x < centerX + safeZoneWidth/2 &&
-                    y > centerY - safeZoneHeight/2 && y < centerY + safeZoneHeight/2
-                );
-
-                btn.style.left = x + 'px';
-                btn.style.top = y + 'px';
-                
-                document.body.appendChild(btn);
+                    let btn = document.createElement("button");
+                    btn.innerHTML = "Yes";
+                    btn.className = "spawned-yes";
+                    btn.onclick = celebrate;
+                    
+                    // Randomize size slightly
+                    const scale = 0.7 + Math.random() * 0.8;
+                    btn.style.transform = `scale(${scale})`;
+                    
+                    btn.style.left = x + 'px';
+                    btn.style.top = y + 'px';
+                    
+                    document.body.appendChild(btn);
+                }
             }
         }
 
         function celebrate() {
             document.getElementById('main-ui').style.display = 'none';
-            const extras = document.querySelectorAll('.spawned-yes');
-            extras.forEach(b => b.remove());
+            document.querySelectorAll('.spawned-yes').forEach(b => b.remove());
             document.getElementById('success').style.display = 'block';
             document.body.style.backgroundColor = "#ffc1e3";
         }
