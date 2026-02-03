@@ -16,7 +16,6 @@
             overflow: hidden;
             font-family: 'Arial', sans-serif;
             text-align: center;
-            transition: background-color 0.5s;
         }
 
         .content-wrapper {
@@ -25,32 +24,21 @@
             align-items: center;
             width: 100%;
             z-index: 100;
-            position: relative;
         }
 
-        .teddy-img {
-            width: 300px; 
-            height: auto;
-            margin-bottom: 15px;
-            border-radius: 20px;
-        }
+        .teddy-img { width: 300px; height: auto; margin-bottom: 15px; border-radius: 20px; }
 
         .banner {
             background: #ff4081;
             color: white;
             padding: 15px 30px;
             border-radius: 15px;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
             font-size: 28px;
             font-weight: bold;
             margin-bottom: 30px;
         }
 
-        .btn-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
+        .btn-group { display: flex; gap: 20px; justify-content: center; }
         
         button {
             padding: 15px 40px;
@@ -59,7 +47,6 @@
             border-radius: 50px;
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         #yesBtn { background-color: #4caf50; color: white; }
@@ -70,13 +57,11 @@
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             background: white;
-            color: black;
             z-index: 1000;
             align-items: center;
             justify-content: center;
         }
 
-        /* Scattered Yes Button Style */
         .spawned-yes {
             position: absolute;
             background-color: #ff4081;
@@ -86,52 +71,37 @@
             font-weight: bold;
             border-radius: 50px;
             border: none;
-            cursor: pointer;
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            opacity: 0;
+            transform: scale(0);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        @keyframes popIn {
-            from { transform: scale(0); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        .heart {
+            position: fixed;
+            bottom: -10%;
+            color: #ff4081;
+            font-size: 24px;
+            z-index: 50;
+            animation: floatUp 4s linear forwards;
         }
 
-        .success-screen {
+        @keyframes floatUp {
+            to { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
+        #success {
             display: none;
             flex-direction: column;
             align-items: center;
             z-index: 2000;
         }
 
-        /* Floating Hearts */
-        .heart {
-            position: fixed;
-            bottom: -10vh;
-            color: #ff4081;
-            font-size: 24px;
-            user-select: none;
-            pointer-events: none;
-            z-index: 50;
-            animation: floatUp 4s linear infinite;
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
-        }
-
-        .dance-gif {
-            width: 250px;
-            height: auto;
-            margin-bottom: 20px;
-            border-radius: 10px;
-        }
+        .dance-gif { width: 280px; height: auto; border-radius: 10px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
     <div id="main-ui" class="content-wrapper">
-        <img src="Dudu.jpeg" alt="Cute Teddy" class="teddy-img">
+        <img src="Dudu.jpeg" alt="Teddy" class="teddy-img">
         <div class="banner">WILL YOU BE MY VALENTINE? ❤️</div>
         <div class="btn-group">
             <button id="yesBtn" onclick="celebrate()">Yes</button>
@@ -140,12 +110,12 @@
     </div>
 
     <div id="overlay">
-        <p style="font-size: 60px; font-weight: 900;"><b>WRONG CHOICE.<br>NOT ALLOWED.</b></p>
+        <h1 style="font-size: 60px; font-weight: 900;">WRONG CHOICE.<br>NOT ALLOWED.</h1>
     </div>
 
-    <div id="success" class="success-screen">
-        <img src="dududance.gif" alt="Dudu Dancing" class="dance-gif">
-        <h1 style="color: #d81b60; font-size: 50px;">YAY! ❤️🌹</h1>
+    <div id="success">
+        <img id="finalGif" src="https://raw.githubusercontent.com/nidhiagarwalla93-lgtm/Be-mine/main/dududance.gif" class="dance-gif">
+        <h1 style="color: #d81b60; font-size: 50px; margin: 0;">YAY! ❤️🌹</h1>
         <p style="font-size: 30px;">Best decision ever!</p>
     </div>
 
@@ -155,11 +125,12 @@
             overlay.style.display = 'flex';
             setTimeout(() => {
                 overlay.style.display = 'none';
-                spawnChaosSequential();
+                // Only start popping buttons AFTER the overlay is gone
+                spawnChaos();
             }, 1500);
         }
 
-        function spawnChaosSequential() {
+        function spawnChaos() {
             const noBtn = document.getElementById('noBtn');
             noBtn.innerText = "Yes";
             noBtn.style.backgroundColor = "#ff4081";
@@ -167,60 +138,53 @@
 
             const rows = 12;
             const cols = 10;
-            const cellWidth = window.innerWidth / cols;
-            const cellHeight = window.innerHeight / rows;
+            const cellW = window.innerWidth / cols;
+            const cellH = window.innerHeight / rows;
 
-            let count = 0;
+            let delay = 0;
             for (let r = 0; r < rows; r++) {
                 for (let c = 0; c < cols; c++) {
-                    const x = c * cellWidth + (cellWidth / 2) - 40;
-                    const y = r * cellHeight + (cellHeight / 2) - 20;
+                    const x = c * cellW + (cellW / 2) - 40;
+                    const y = r * cellH + (cellH / 2) - 20;
 
-                    const centerX = window.innerWidth / 2;
-                    const centerY = window.innerHeight / 2;
-                    if (Math.abs(x - centerX) < 220 && Math.abs(y - centerY) < 280) continue;
+                    if (Math.abs(x - window.innerWidth/2) < 220 && Math.abs(y - window.innerHeight/2) < 280) continue;
 
-                    // Delay each button slightly
                     setTimeout(() => {
                         let btn = document.createElement("button");
                         btn.innerHTML = "Yes";
                         btn.className = "spawned-yes";
                         btn.onclick = celebrate;
-                        
-                        const scale = 0.6 + Math.random() * 1.0;
                         btn.style.left = x + 'px';
                         btn.style.top = y + 'px';
-                        btn.style.transform = `scale(${scale})`;
-                        
                         document.body.appendChild(btn);
-                    }, count * 15); // 15ms delay between each button
-                    count++;
+                        
+                        // Small delay to ensure the browser sees the 'scale(0)' first
+                        setTimeout(() => {
+                            btn.style.transform = `scale(${0.6 + Math.random()})`;
+                        }, 50);
+                    }, delay);
+                    delay += 30; // 30ms between each pop
                 }
             }
-        }
-
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
-            heart.style.fontSize = Math.random() * 20 + 20 + 'px';
-            document.body.appendChild(heart);
-
-            setTimeout(() => { heart.remove(); }, 5000);
         }
 
         function celebrate() {
             document.getElementById('main-ui').style.display = 'none';
             document.querySelectorAll('.spawned-yes').forEach(b => b.remove());
             
-            const success = document.getElementById('success');
-            success.style.display = 'flex';
+            const successDiv = document.getElementById('success');
+            successDiv.style.display = 'flex';
             document.body.style.backgroundColor = "#ffc1e3";
 
-            // Start raining hearts
-            setInterval(createHeart, 300);
+            // Launch the floating heart effect
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.className = 'heart';
+                heart.style.left = Math.random() * 100 + 'vw';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 4000);
+            }, 300);
         }
     </script>
 </body>
