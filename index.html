@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+            <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,11 +26,11 @@
             z-index: 10;
         }
 
-        /* Image sizing (30% bigger as requested) */
+        /* Image sizing (30% bigger) */
         .teddy-img {
-            width: 320px; 
+            width: 300px; 
             height: auto;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .banner {
@@ -39,7 +39,7 @@
             padding: 20px 40px;
             border-radius: 15px;
             box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-            font-size: 32px;
+            font-size: 28px;
             font-weight: bold;
             margin-bottom: 40px;
             max-width: 85%;
@@ -47,25 +47,23 @@
 
         .btn-group {
             display: flex;
-            gap: 25px;
+            gap: 20px;
             justify-content: center;
         }
         
         button {
-            padding: 20px 60px;
-            font-size: 32px;
+            padding: 20px 50px;
+            font-size: 30px;
             font-weight: bold;
             border-radius: 50px;
             border: none;
             cursor: pointer;
-            transition: transform 0.2s;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         #yesBtn { background-color: #4caf50; color: white; }
         #noBtn { background-color: #f44336; color: white; }
 
-        /* Error Message Styles */
         #overlay {
             display: none;
             position: fixed;
@@ -78,23 +76,16 @@
             justify-content: center;
         }
 
-        #overlay p {
-            font-size: 60px;
-            font-weight: 900;
-            line-height: 1.2;
-        }
-
         .spawned-yes {
             position: absolute;
             background-color: #ff4081;
             color: white;
             z-index: 500;
-            white-space: nowrap;
         }
 
         .success-screen {
             display: none;
-            font-size: 50px;
+            font-size: 40px;
             color: #d81b60;
         }
     </style>
@@ -102,7 +93,7 @@
 <body>
 
     <div id="main-ui" class="content-wrapper">
-        <img src="[attachment_0](attachment)" alt="Cute Teddy" class="teddy-img">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueW90NXp4NjZqbm80M3R6ZzR0eHh4eHh4eHh4eHh4eHh4eHgmZXA9djFfaW50ZXJuYWxfZ2lmX2J5X2lkJmN0PXM/IgS64qnA0FvLq/giphy.gif" alt="Cute Teddy" class="teddy-img">
         
         <div class="banner">WILL YOU BE MY VALENTINE? ❤️</div>
 
@@ -112,21 +103,19 @@
         </div>
     </div>
 
-    <div id="overlay" style="display:none;">
-        <p><b>WRONG CHOICE.<br>NOT ALLOWED.</b></p>
+    <div id="overlay">
+        <p style="font-size: 60px; font-weight: 900;"><b>WRONG CHOICE.<br>NOT ALLOWED.</b></p>
     </div>
 
     <div id="success" class="success-screen">
         <h1>YAY! ❤️🌹</h1>
-        <p>Best decision ever!</p>
+        <p>Best choice ever!</p>
     </div>
 
     <script>
         function punish() {
             const overlay = document.getElementById('overlay');
             overlay.style.display = 'flex';
-
-            // Hide overlay after 1.5 seconds and trigger chaos
             setTimeout(() => {
                 overlay.style.display = 'none';
                 spawnChaos();
@@ -139,33 +128,26 @@
             noBtn.style.backgroundColor = "#ff4081";
             noBtn.onclick = celebrate;
 
-            // Spawn 15 random Yes buttons
             for (let i = 0; i < 15; i++) {
                 let btn = document.createElement("button");
                 btn.innerHTML = "Yes";
                 btn.className = "spawned-yes";
                 btn.onclick = celebrate;
-                
-                let x = Math.random() * (window.innerWidth - 180);
+                let x = Math.random() * (window.innerWidth - 150);
                 let y = Math.random() * (window.innerHeight - 100);
-                
                 btn.style.left = x + 'px';
                 btn.style.top = y + 'px';
-                
                 document.body.appendChild(btn);
             }
         }
 
         function celebrate() {
             document.getElementById('main-ui').style.display = 'none';
-            // Clean up all the spawned buttons
             const extras = document.querySelectorAll('.spawned-yes');
             extras.forEach(b => b.remove());
-            
             document.getElementById('success').style.display = 'block';
             document.body.style.backgroundColor = "#ffc1e3";
         }
     </script>
-
 </body>
 </html>
