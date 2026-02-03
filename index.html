@@ -1,4 +1,4 @@
-            <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,11 +26,12 @@
             z-index: 10;
         }
 
-        /* Image sizing (30% bigger) */
+        /* Image sizing - 30% larger */
         .teddy-img {
-            width: 300px; 
+            width: 350px; 
             height: auto;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            border-radius: 20px;
         }
 
         .banner {
@@ -39,7 +40,7 @@
             padding: 20px 40px;
             border-radius: 15px;
             box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
             margin-bottom: 40px;
             max-width: 85%;
@@ -47,13 +48,13 @@
 
         .btn-group {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             justify-content: center;
         }
         
         button {
-            padding: 20px 50px;
-            font-size: 30px;
+            padding: 20px 60px;
+            font-size: 32px;
             font-weight: bold;
             border-radius: 50px;
             border: none;
@@ -64,6 +65,7 @@
         #yesBtn { background-color: #4caf50; color: white; }
         #noBtn { background-color: #f44336; color: white; }
 
+        /* Full-screen error message */
         #overlay {
             display: none;
             position: fixed;
@@ -85,7 +87,7 @@
 
         .success-screen {
             display: none;
-            font-size: 40px;
+            font-size: 45px;
             color: #d81b60;
         }
     </style>
@@ -93,7 +95,7 @@
 <body>
 
     <div id="main-ui" class="content-wrapper">
-        <img src="Dudu.jpeg" alt="Cute Teddy" class="teddy-img">
+        <img src="Dudu.jpeg" alt="Valentine Teddy" class="teddy-img">
         
         <div class="banner">WILL YOU BE MY VALENTINE? ❤️</div>
 
@@ -104,12 +106,12 @@
     </div>
 
     <div id="overlay">
-        <p style="font-size: 60px; font-weight: 900;"><b>WRONG CHOICE.<br>NOT ALLOWED.</b></p>
+        <p style="font-size: 70px; font-weight: 900;"><b>WRONG CHOICE.<br>NOT ALLOWED.</b></p>
     </div>
 
     <div id="success" class="success-screen">
         <h1>YAY! ❤️🌹</h1>
-        <p>Best choice ever!</p>
+        <p>I knew you'd say Yes!</p>
     </div>
 
     <script>
@@ -119,7 +121,7 @@
             setTimeout(() => {
                 overlay.style.display = 'none';
                 spawnChaos();
-            }, 1500);
+            }, 1800);
         }
 
         function spawnChaos() {
@@ -128,6 +130,7 @@
             noBtn.style.backgroundColor = "#ff4081";
             noBtn.onclick = celebrate;
 
+            // Spawn 15 random Yes buttons
             for (let i = 0; i < 15; i++) {
                 let btn = document.createElement("button");
                 btn.innerHTML = "Yes";
