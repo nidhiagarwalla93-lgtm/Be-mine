@@ -39,6 +39,7 @@
 
         .btn-group { display: flex; gap: 20px; }
         
+        /* Base button style */
         button {
             padding: 15px 40px;
             font-size: 28px;
@@ -46,6 +47,7 @@
             border-radius: 50px;
             border: none;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         #yesBtn { background-color: #4caf50; color: white; }
@@ -66,17 +68,11 @@
             background-color: #ff4081;
             color: white;
             z-index: 10;
-            padding: 10px 20px;
-            font-weight: bold;
-            border-radius: 50px;
-            border: none;
-            cursor: pointer;
             opacity: 0;
             transform: scale(0);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
         }
 
-        /* Animation for hearts */
         @keyframes floatUp {
             0% { transform: translateY(0) rotate(0deg); opacity: 1; }
             100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
@@ -107,7 +103,6 @@
 
     <div id="success">
         <img src="https://raw.githubusercontent.com/nidhiagarwalla93-lgtm/Be-mine/main/dududance.gif" style="width: 280px; height: auto; border-radius: 10px; margin-bottom: 20px;">
-        
         <h1 style="color: #d81b60 !important; font-size: 60px !important; font-weight: 900 !important; margin: 5px 0 !important; display: block !important;">YAY! ❤️🌹</h1>
         <h1 style="color: #d81b60 !important; font-size: 60px !important; font-weight: 900 !important; margin: 5px 0 !important; display: block !important;">Best decision ever!</h1>
     </div>
@@ -118,16 +113,25 @@
             overlay.style.display = 'flex';
             setTimeout(() => {
                 overlay.style.display = 'none';
+                updateOriginalButtons();
                 spawnChaos();
             }, 1500);
         }
 
-        function spawnChaos() {
+        // This function forces the initial buttons to match the new ones
+        function updateOriginalButtons() {
+            const yesBtn = document.getElementById('yesBtn');
             const noBtn = document.getElementById('noBtn');
-            noBtn.innerText = "Yes";
-            noBtn.style.backgroundColor = "#ff4081";
-            noBtn.onclick = celebrate;
 
+            // Turn both into Pink "Yes" buttons
+            [yesBtn, noBtn].forEach(btn => {
+                btn.innerText = "Yes";
+                btn.style.backgroundColor = "#ff4081";
+                btn.onclick = celebrate;
+            });
+        }
+
+        function spawnChaos() {
             for (let i = 0; i < 150; i++) {
                 setTimeout(() => {
                     const btn = document.createElement("button");
@@ -159,14 +163,14 @@
             successDiv.style.display = 'flex';
             document.body.style.backgroundColor = "#ffc1e3";
 
-            // SUPER-SIZED HEARTS
+            // GIANT HEARTS
             setInterval(() => {
                 const heart = document.createElement('div');
                 heart.innerHTML = '❤️';
                 heart.style.position = 'fixed';
                 heart.style.bottom = '-10%';
                 heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.fontSize = (Math.random() * 50 + 60) + 'px'; // 60px to 110px
+                heart.style.fontSize = (Math.random() * 50 + 70) + 'px'; 
                 heart.style.color = '#ff4081';
                 heart.style.zIndex = '2000';
                 heart.style.animation = 'floatUp 4s linear forwards';
