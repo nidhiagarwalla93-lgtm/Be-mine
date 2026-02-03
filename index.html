@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            background-color: #fce4ec;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        /* The Teddy Bear Container */
+        .teddy {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            background: #bcaaa4;
+            border-radius: 50% 50% 45% 45%;
+            margin-bottom: 50px;
+        }
+
+        /* Ears */
+        .teddy::before, .teddy::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: #bcaaa4;
+            border-radius: 50%;
+            top: -10px;
+            z-index: -1;
+        }
+        .teddy::before { left: -10px; }
+        .teddy::after { right: -10px; }
+
+        /* Face Details */
+        .eyes {
+            position: absolute;
+            top: 50px; width: 100%;
+            display: flex; justify-content: space-around; padding: 0 30px; box-sizing: border-box;
+        }
+        .eye { width: 15px; height: 15px; background: #3e2723; border-radius: 50%; }
+        .nose {
+            position: absolute;
+            bottom: 40px; left: 50%;
+            transform: translateX(-50%);
+            width: 20px; height: 15px; background: #3e2723; border-radius: 40%;
+        }
+
+        /* The Banner */
+        .banner {
+            position: absolute;
+            top: 110px;
+            left: -50px;
+            width: 250px;
+            background: #ff80ab;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        .buttons { margin-top: 80px; }
+        
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        #yesBtn { background-color: #ff4081; color: white; }
+        #noBtn { background-color: #9e9e9e; color: white; }
+
+        .success-msg { display: none; color: #d81b60; font-size: 24px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div id="main-content">
+        <div class="teddy">
+            <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+            <div class="nose"></div>
+            <div class="banner">Will you be my Valentine? 🧸</div>
+        </div>
+
+        <div class="buttons">
+            <button id="yesBtn" onclick="celebrate()">Yes</button>
+            <button id="noBtn" onclick="forceYes()">No</button>
+        </div>
+    </div>
+
+    <div id="success" class="success-msg">
+        <h1>Yay! See you on the 14th! ❤️🌹</h1>
+        <p>You made the right choice.</p>
+    </div>
+
+    <script>
+        function forceYes() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+
+            // Show the "invalid choice" alert
+            alert("Sorry, invalid choice! 😉");
+
+            // Change the No button text to Yes
+            noBtn.innerText = "Yes";
+            
+            // Make the original Yes button grow a little
+            yesBtn.style.transform = "scale(1.5)";
+            
+            // Change the No button function so it acts like a Yes
+            noBtn.onclick = celebrate;
+            noBtn.style.backgroundColor = "#ff4081";
+        }
+
+        function celebrate() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('success').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
