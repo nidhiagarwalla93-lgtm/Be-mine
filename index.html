@@ -77,13 +77,14 @@
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
         }
 
+        /* BIGGER FLOATING HEARTS */
         .heart {
             position: fixed;
             bottom: -10%;
             color: #ff4081;
-            font-size: 24px;
             z-index: 2000;
             animation: floatUp 4s linear forwards;
+            pointer-events: none;
         }
 
         @keyframes floatUp {
@@ -98,14 +99,6 @@
         }
 
         .dance-gif { width: 280px; height: auto; border-radius: 10px; margin-bottom: 20px; }
-        
-        /* Matching styles for Success text */
-        .yay-text {
-            color: #d81b60;
-            font-size: 50px;
-            font-weight: 900;
-            margin: 10px 0;
-        }
     </style>
 </head>
 <body>
@@ -125,8 +118,8 @@
 
     <div id="success">
         <img id="finalGif" src="https://raw.githubusercontent.com/nidhiagarwalla93-lgtm/Be-mine/main/dududance.gif" class="dance-gif">
-        <h1 class="yay-text">YAY! ❤️🌹</h1>
-        <h1 class="yay-text">Best decision ever!</h1>
+        <h1 style="color: #d81b60; font-size: 50px; font-weight: 900; margin: 10px 0;">YAY! ❤️🌹</h1>
+        <h1 style="color: #d81b60; font-size: 50px; font-weight: 900; margin: 10px 0;">Best decision ever!</h1>
     </div>
 
     <script>
@@ -135,33 +128,29 @@
             overlay.style.display = 'flex';
             setTimeout(() => {
                 overlay.style.display = 'none';
-                spawnPureChaos();
+                spawnChaos();
             }, 1500);
         }
 
-        function spawnPureChaos() {
+        function spawnChaos() {
             const noBtn = document.getElementById('noBtn');
             noBtn.innerText = "Yes";
             noBtn.style.backgroundColor = "#ff4081";
             noBtn.onclick = celebrate;
 
-            const totalButtons = 150; 
-            
-            for (let i = 0; i < totalButtons; i++) {
+            for (let i = 0; i < 150; i++) {
                 setTimeout(() => {
                     const btn = document.createElement("button");
                     btn.innerHTML = "Yes";
                     btn.className = "spawned-yes";
                     btn.onclick = celebrate;
 
-                    // Fully random screen-wide placement
                     const x = Math.random() * (window.innerWidth - 100);
                     const y = Math.random() * (window.innerHeight - 50);
 
                     btn.style.left = x + 'px';
                     btn.style.top = y + 'px';
 
-                    // Random scale between 0.4x and 2.2x
                     const randomScale = 0.4 + Math.random() * 1.8; 
                     
                     document.body.appendChild(btn);
@@ -171,7 +160,7 @@
                         btn.style.transform = `scale(${randomScale})`;
                     }, 20);
 
-                }, i * 20); // Pop-pop-pop-pop!
+                }, i * 20);
             }
         }
 
@@ -183,11 +172,14 @@
             successDiv.style.display = 'flex';
             document.body.style.backgroundColor = "#ffc1e3";
 
+            // HEART RAIN LOGIC
             setInterval(() => {
                 const heart = document.createElement('div');
                 heart.innerHTML = '❤️';
                 heart.className = 'heart';
                 heart.style.left = Math.random() * 100 + 'vw';
+                // Randomizing size between 40px and 70px for "Bigger" hearts
+                heart.style.fontSize = (Math.random() * 30 + 40) + 'px';
                 document.body.appendChild(heart);
                 setTimeout(() => heart.remove(), 4000);
             }, 200);
