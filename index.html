@@ -26,7 +26,6 @@
             z-index: 10;
         }
 
-        /* Image sizing - 30% larger */
         .teddy-img {
             width: 350px; 
             height: auto;
@@ -65,15 +64,14 @@
         #yesBtn { background-color: #4caf50; color: white; }
         #noBtn { background-color: #f44336; color: white; }
 
-        /* Full-screen error message */
+        /* FIXED: This is now hidden by default */
         #overlay {
-            display: none;
+            display: none; 
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             background: white;
             color: black;
             z-index: 1000;
-            display: flex;
             align-items: center;
             justify-content: center;
         }
@@ -83,6 +81,10 @@
             background-color: #ff4081;
             color: white;
             z-index: 500;
+            padding: 15px 30px;
+            font-size: 24px;
+            border-radius: 50px;
+            border: none;
         }
 
         .success-screen {
@@ -96,9 +98,7 @@
 
     <div id="main-ui" class="content-wrapper">
         <img src="Dudu.jpeg" alt="Valentine Teddy" class="teddy-img">
-        
         <div class="banner">WILL YOU BE MY VALENTINE? ❤️</div>
-
         <div class="btn-group">
             <button id="yesBtn" onclick="celebrate()">Yes</button>
             <button id="noBtn" onclick="punish()">No</button>
@@ -111,15 +111,15 @@
 
     <div id="success" class="success-screen">
         <h1>YAY! ❤️🌹</h1>
-        <p>I knew you'd say Yes!</p>
+        <p>Best choice ever!</p>
     </div>
 
     <script>
         function punish() {
             const overlay = document.getElementById('overlay');
-            overlay.style.display = 'flex';
+            overlay.style.display = 'flex'; // Shows the error screen
             setTimeout(() => {
-                overlay.style.display = 'none';
+                overlay.style.display = 'none'; // Hides it after 1.8 seconds
                 spawnChaos();
             }, 1800);
         }
@@ -130,7 +130,6 @@
             noBtn.style.backgroundColor = "#ff4081";
             noBtn.onclick = celebrate;
 
-            // Spawn 15 random Yes buttons
             for (let i = 0; i < 15; i++) {
                 let btn = document.createElement("button");
                 btn.innerHTML = "Yes";
