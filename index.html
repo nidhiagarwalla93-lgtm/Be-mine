@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Be My Valentine?</title>
+    <title>Valentine's Day: Parent Edition</title>
     <style>
         body {
             background-color: #fce4ec;
@@ -25,21 +25,21 @@
             z-index: 1000;
         }
 
-        .teddy-img { width: 300px; height: auto; margin-bottom: 15px; border-radius: 20px; }
+        .teddy-img { width: 280px; height: auto; border-radius: 20px; margin-bottom: 10px; }
 
         .banner {
             background: #ff4081;
             color: white;
-            padding: 15px 30px;
+            padding: 15px 25px;
             border-radius: 15px;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            line-height: 1.4;
         }
 
         .btn-group { display: flex; gap: 20px; }
         
-        /* Base button style */
         button {
             padding: 15px 40px;
             font-size: 28px;
@@ -47,7 +47,6 @@
             border-radius: 50px;
             border: none;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
 
         #yesBtn { background-color: #4caf50; color: white; }
@@ -59,8 +58,11 @@
             top: 0; left: 0; width: 100vw; height: 100vh;
             background: white;
             z-index: 5000;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            text-align: center;
+            padding: 20px;
         }
 
         .spawned-yes {
@@ -68,6 +70,11 @@
             background-color: #ff4081;
             color: white;
             z-index: 10;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
             opacity: 0;
             transform: scale(0);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
@@ -90,7 +97,10 @@
 
     <div id="main-ui" class="content-wrapper">
         <img src="Dudu.jpeg" alt="Teddy" class="teddy-img">
-        <div class="banner">WILL YOU BE MY VALENTINE? ❤️</div>
+        <div class="banner">
+            Chitransh, will you be my Valentine?<br>
+            (And also handle Piku's diaper changes all day?) ❤️
+        </div>
         <div class="btn-group">
             <button id="yesBtn" onclick="celebrate()">Yes</button>
             <button id="noBtn" onclick="punish()">No</button>
@@ -98,13 +108,21 @@
     </div>
 
     <div id="overlay">
-        <h1 style="font-size: 60px; font-weight: 900; text-align: center;">WRONG CHOICE.<br>NOT ALLOWED.</h1>
+        <h1 style="font-size: 40px; font-weight: 900; color: #d32f2f;">WRONG CHOICE.</h1>
+        <p style="font-size: 24px; font-weight: bold;">
+            If you click No, you have to:<br><br>
+            ❌ Wake up at 3 AM with Piku<br>
+            ❌ Drive through Silk Board traffic alone<br>
+            ❌ Cook dinner for the next week
+        </p>
+        <h2 style="font-size: 30px; margin-top: 20px;">ACCESS DENIED!</h2>
     </div>
 
     <div id="success">
-        <img src="https://raw.githubusercontent.com/nidhiagarwalla93-lgtm/Be-mine/main/dududance.gif" style="width: 280px; height: auto; border-radius: 10px; margin-bottom: 20px;">
-        <h1 style="color: #d81b60 !important; font-size: 60px !important; font-weight: 900 !important; margin: 5px 0 !important; display: block !important;">YAY! ❤️🌹</h1>
-        <h1 style="color: #d81b60 !important; font-size: 60px !important; font-weight: 900 !important; margin: 5px 0 !important; display: block !important;">Best decision ever!</h1>
+        <img src="dududance.gif" style="width: 280px; height: auto; border-radius: 10px; margin-bottom: 20px;">
+        <h1 style="color: #d81b60; font-size: 50px; font-weight: 900; margin: 5px 0;">YAY! ❤️🌹</h1>
+        <h1 style="color: #d81b60; font-size: 40px; font-weight: 900; margin: 5px 0;">Happy 14th Feb!</h1>
+        <p style="color: #d81b60; font-size: 24px; font-weight: bold;">Piku's mom is going for a spa day! 💅</p>
     </div>
 
     <script>
@@ -115,17 +133,14 @@
                 overlay.style.display = 'none';
                 updateOriginalButtons();
                 spawnChaos();
-            }, 1500);
+            }, 3000); // 3 seconds to read the "punishments"
         }
 
-        // This function forces the initial buttons to match the new ones
         function updateOriginalButtons() {
             const yesBtn = document.getElementById('yesBtn');
             const noBtn = document.getElementById('noBtn');
-
-            // Turn both into Pink "Yes" buttons
             [yesBtn, noBtn].forEach(btn => {
-                btn.innerText = "Yes";
+                btn.innerText = "Okay, Fine!";
                 btn.style.backgroundColor = "#ff4081";
                 btn.onclick = celebrate;
             });
@@ -135,17 +150,14 @@
             for (let i = 0; i < 150; i++) {
                 setTimeout(() => {
                     const btn = document.createElement("button");
-                    btn.innerHTML = "Yes";
+                    btn.innerHTML = "Yes!";
                     btn.className = "spawned-yes";
                     btn.onclick = celebrate;
-
                     const x = Math.random() * (window.innerWidth - 100);
                     const y = Math.random() * (window.innerHeight - 50);
-
                     btn.style.left = x + 'px';
                     btn.style.top = y + 'px';
                     const randomScale = 0.4 + Math.random() * 1.8; 
-                    
                     document.body.appendChild(btn);
                     setTimeout(() => {
                         btn.style.opacity = "1";
@@ -158,12 +170,10 @@
         function celebrate() {
             document.getElementById('main-ui').style.display = 'none';
             document.querySelectorAll('.spawned-yes').forEach(b => b.remove());
-            
             const successDiv = document.getElementById('success');
             successDiv.style.display = 'flex';
             document.body.style.backgroundColor = "#ffc1e3";
 
-            // GIANT HEARTS
             setInterval(() => {
                 const heart = document.createElement('div');
                 heart.innerHTML = '❤️';
